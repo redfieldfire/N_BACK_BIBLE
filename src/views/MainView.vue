@@ -2,6 +2,7 @@
 import { ref } from 'vue'
 
 const count = ref(0)
+const book = ref("")
 
 const bibleBooks = [
   //OLD TESTAMENT
@@ -75,12 +76,26 @@ const bibleBooks = [
   "Apocalipsis"
 ];
 
+const getRandomBook = () => {
+    const randomNumber = Math.floor(Math.random() * bibleBooks.length)
+    book.value = bibleBooks[randomNumber]
+}
+
 </script>
 
 <template>
-    <label> </label>
+    <div class="center">
+        <label>{{book}}</label>
+        </br>
+        <button  @click="getRandomBook">CLICK ME</button>
+    </div>
 </template>
 
 <style scoped>
-
+    .center {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+    }
 </style>
