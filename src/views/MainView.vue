@@ -1,7 +1,8 @@
 <script setup>
 import { ref } from 'vue'
 
-const count = ref(2)
+const count = ref(0)
+const n = ref(2)
 const currentBook = ref("")
 const pastBooks = ref([])
 const answerPastBook = ref("")
@@ -13,7 +14,7 @@ const answer2 = ref("")
 const color1 = ref("")
 const color2 = ref("")
 
-const bibleBooks = [
+/*const bibleBooks = [
   //OLD TESTAMENT
   "Génesis",
   "Éxodo",
@@ -83,18 +84,71 @@ const bibleBooks = [
   "3 Juan",
   "Judas",
   "Apocalipsis"
-];
+];*/
+
+const languageBooks = [
+    "JavaScript",
+    "Python",
+    "Java",
+    "C#",
+    "C++",
+    "PHP",
+    "Swift",
+    "TypeScript",
+    "Ruby",
+    "Kotlin",
+    "Go",
+    "Rust",
+    "R",
+    "Objective-C",
+    "Scala",
+    "Perl",
+    "Haskell",
+    "Lua",
+    "Dart",
+    "Elixir",
+    "Clojure",
+    "Shell",
+    "MATLAB",
+    "SQL",
+    "Groovy",
+    "F#",
+    "Erlang",
+    "VB.NET",
+    "Visual Basic",
+    "Assembly",
+    "COBOL",
+    "Fortran",
+    "Ada",
+    "Julia",
+    "VHDL",
+    "Prolog",
+    "Scheme",
+    "ActionScript",
+    "Racket",
+    "Scratch",
+    "PL/SQL",
+    "SAS",
+    "Tcl",
+    "ABAP",
+    "D",
+    "Smalltalk",
+    "Awk",
+    "Pascal",
+    "Logo",
+    "Solidity"
+]
 
 const getRandomBook = () => {
     currentBook.value = randomBook()
 }
 
 const randomBook = (except = -1) => {
-    var randomNumber = Math.floor(Math.random() * bibleBooks.length)
+    var randomNumber = Math.floor(Math.random() * languageBooks.length)
     while (except == randomNumber) {
-        randomNumber = Math.floor(Math.random() * bibleBooks.length)
+        randomNumber = Math.floor(Math.random() * languageBooks.length)
     }
-    return bibleBooks[randomNumber]
+    return languageBooks[randomNumber]
 }
 
 const addRandomBook = () => {
@@ -112,11 +166,12 @@ const setTimeToAnswer = (value) => {
 const nextAction = () => {
     getRandomBook()
     addRandomBook()
-    if (pastBooks.value.length > count.value) {
+    if (pastBooks.value.length > n.value) {
         setTimeToAnswer(true)
         addAnswerBook()
         setAnswers()
     }
+    count.value++;
 }
 
 const setAnswers = () => {
@@ -138,6 +193,7 @@ const guessAction = (value, button) => {
 
         color1.value = ""
         color2.value = ""
+        count.value++;
     }
     else {
        if (button == 1) {
@@ -155,14 +211,15 @@ const guessAction = (value, button) => {
 
 <template>
     <div class="center column gap-30">
+        <label class="count-label">Contador {{count}}</label>
         <label class="actual-book-title">{{currentBook}}</label>
         <button class="button-next" v-if="!timeToAnswer" @click="nextAction">Siguiente!</button>
         <div v-else class="center row gap-30">
             <button class="button-answer" :style="{backgroundColor: color1}" @click="guessAction(answer1, 1)">{{answer1}}</button>
             <button class="button-answer" :style="{backgroundColor: color2}" @click="guessAction(answer2, 2)">{{answer2}}</button>
         </div>
-        <label class="answer-list-item" v-for="(book, index) in pastBooks" :key="index">{{( index + 1 ) + " -> " + book}}</label>
-        <h2 class="answer">Answer: {{answerPastBook}}</h2>
+        <label hidden class="answer-list-item" v-for="(book, index) in pastBooks" :key="index">{{( index + 1 ) + " -> " + book}}</label>
+        <h2 hidden class="answer">Answer: {{answerPastBook}}</h2>
     </div>
 </template>
 
@@ -202,6 +259,10 @@ const guessAction = (value, button) => {
     }
 
     .answer {
+        font-size: 3rem;
+    }
+
+    .count-label {
         font-size: 3rem;
     }
 </style>
