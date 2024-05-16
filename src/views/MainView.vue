@@ -161,8 +161,8 @@ const guessAction = (value, button) => {
             <button class="button-answer" :style="{backgroundColor: color1}" @click="guessAction(answer1, 1)">{{answer1}}</button>
             <button class="button-answer" :style="{backgroundColor: color2}" @click="guessAction(answer2, 2)">{{answer2}}</button>
         </div>
-        <label hidden="false" v-for="(book, index) in pastBooks" :key="index">{{( index + 1 ) + " -> " + book}}</label>
-        <h2 hidden="false" >Answer: {{answerPastBook}}</h2>
+        <label class="answer-list-item" v-for="(book, index) in pastBooks" :key="index">{{( index + 1 ) + " -> " + book}}</label>
+        <h2 class="answer">Answer: {{answerPastBook}}</h2>
     </div>
 </template>
 
@@ -194,6 +194,14 @@ const guessAction = (value, button) => {
     }
 
     .button-next {
+        font-size: 3rem;
+    }
+
+    .answer-list-item {
+        font-size: 2rem;
+    }
+
+    .answer {
         font-size: 3rem;
     }
 </style>
